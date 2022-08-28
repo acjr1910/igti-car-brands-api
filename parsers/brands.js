@@ -4,6 +4,7 @@ const brands = (data) => {
   };
 
   const getBrandsWith = (option = "mostModels") => {
+    const sortedData = sort();
     let modelsQty = 0;
     switch (option) {
       case "mostModels":
@@ -21,8 +22,6 @@ const brands = (data) => {
     const mapBrandNames = getAllWithMostValues.map((o) => o.brand);
     return mapBrandNames.length > 1 ? mapBrandNames : mapBrandNames[0];
   };
-
-  const sortedData = sort();
 
   return {
     getBrandsWith,
