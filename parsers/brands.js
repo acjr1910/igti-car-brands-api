@@ -23,7 +23,7 @@ const brands = (data) => {
     return mapBrandNames.length > 1 ? mapBrandNames : mapBrandNames[0];
   };
 
-  const getNBrandsWithMostModels = (n, option = "mostModels") => {
+  const getNBrandsWith = (n, option = "mostModels") => {
     const N = n > data.length ? data.length - 1 : n;
     let sortedData = [];
     switch (option) {
@@ -45,7 +45,7 @@ const brands = (data) => {
 
   return {
     getBrandsWith,
-    getNBrandsWithMostModels,
+    getNBrandsWith,
   };
 };
 

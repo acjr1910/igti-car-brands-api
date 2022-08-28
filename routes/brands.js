@@ -35,7 +35,7 @@ router.get("/listaMaisModelos/:qty", (req, res) => {
     const { qty: N = 0 } = req.params;
     res
       .status(200)
-      .send(brandsParser(JSON.parse(data)).getNBrandsWithMostModels(N, "mostModels"));
+      .send(brandsParser(JSON.parse(data)).getNBrandsWith(N, "mostModels"));
   });
 });
 
@@ -47,7 +47,7 @@ router.get("/listaMenosModelos/:qty", (req, res) => {
     const { qty: N = 0 } = req.params;
     res
       .status(200)
-      .send(brandsParser(JSON.parse(data)).getNBrandsWithMostModels(N, "leastModels"));
+      .send(brandsParser(JSON.parse(data)).getNBrandsWith(N, "leastModels"));
   });
 });
 
