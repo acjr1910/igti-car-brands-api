@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
-import { getTopBrands } from "../helpers/helpers.js";
 import CONSTANTS from "../constants/index.js";
+import brandsParser from "../parsers/brands.js";
 
 const router = express.Router();
 
@@ -12,9 +12,7 @@ router.get("/maisModelos", (req, res) => {
     }
     res
       .status(200)
-      .send(
-        getTopBrands(JSON.parse(data), CONSTANTS.TOP_BRANDS_BY_METHODS.MOST)
-      );
+      .send(brandsParser(JSON.parse(data)).getBrandsWith("mostModels"));
   });
 });
 
@@ -25,9 +23,7 @@ router.get("/menosModelos", (req, res) => {
     }
     res
       .status(200)
-      .send(
-        getTopBrands(JSON.parse(data), CONSTANTS.TOP_BRANDS_BY_METHODS.LEAST)
-      );
+      .send(brandsParser(JSON.parse(data)).getBrandsWith("leastModels"));
   });
 });
 
