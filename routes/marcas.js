@@ -4,7 +4,7 @@ import { getTopBrands } from "./helpers.js";
 
 const router = express.Router();
 
-router.get("/maisModelos", async (req, res) => {
+router.get("/maisModelos", (req, res) => {
   fs.readFile("./db/car-list.json", "utf-8", (err, data) => {
     if (err) {
       res.send({ error: `Something went wrong` });
