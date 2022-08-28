@@ -23,8 +23,29 @@ const brands = (data) => {
     return mapBrandNames.length > 1 ? mapBrandNames : mapBrandNames[0];
   };
 
+  const getNBrandsWithMostModels = (n, option = "mostModels") => {
+    const N = n > data.length ? data.length - 1 : n;
+    let sortedData = [];
+    switch (option) {
+      case "mostModels":
+        sortedData = sort();
+        break;
+      case "leastModels":
+        sortedData = sort().reverse();
+        break;
+      case "default":
+        sortedData = [];
+    }
+    let formatted = [];
+    for (let i = 0; i < N; i++) {
+      formatted = [...formatted, `${data[i].brand} - ${data[i].models.length}`];
+    }
+    return formatted;
+  }
+
   return {
     getBrandsWith,
+    getNBrandsWithMostModels,
   };
 };
 

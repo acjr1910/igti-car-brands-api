@@ -28,11 +28,27 @@ router.get("/menosModelos", (req, res) => {
 });
 
 router.get("/listaMaisModelos/:qty", (req, res) => {
-  res.send("GET /listaMaisModelos/:qty");
+  fs.readFile("./db/car-list.json", CONSTANTS.ENCODINGS.UTF_8, (err, data) => {
+    if (err) {
+      res.send({ error: `Something went wrong` });
+    }
+    const { qty: N = 0 } = req.params;
+    res
+      .status(200)
+      .send(brandsParser(JSON.parse(data)).getNBrandsWithMostModels(N, "mostModels"));
+  });
 });
 
-router.get("/listaMenosModelos:qty", (req, res) => {
-  res.send("GET /listaMenosModelos:qty");
+router.get("/listaMenosModelos/:qty", (req, res) => {
+  fs.readFile("./db/car-list.json", CONSTANTS.ENCODINGS.UTF_8, (err, data) => {
+    if (err) {
+      res.send({ error: `Something went wrong` });
+    }
+    const { qty: N = 0 } = req.params;
+    res
+      .status(200)
+      .send(brandsParser(JSON.parse(data)).getNBrandsWithMostModels(N, "leastModels"));
+  });
 });
 
 router.post("/listaModelos", (req, res) => {
