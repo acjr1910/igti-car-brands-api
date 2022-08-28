@@ -1,6 +1,6 @@
 import express from "express";
 import fs from "fs";
-import { getBrandWithMostModels } from "./helpers.js";
+import { getTopBrands } from "./helpers.js";
 
 const router = express.Router();
 
@@ -9,12 +9,17 @@ router.get("/maisModelos", async (req, res) => {
     if (err) {
       res.send({ error: `Something went wrong` });
     }
-    res.status(200).send(getBrandWithMostModels(JSON.parse(data)));
+    res.status(200).send(getTopBrands(JSON.parse(data), 'mostModels'));
   });
 });
 
 router.get("/menosModelos", (req, res) => {
-  res.send("GET /menosModelos");
+  fs.readFile("./db/car-list.json", "utf-8", (err, data) => {
+    if (err) {
+      res.send({ error: `Something went wrong` });
+    }
+    res.status(200).send(getTopBrands(JSON.parse(data), 'leastModels'));
+  });
 });
 
 router.get("/listaMaisModelos/:qty", (req, res) => {

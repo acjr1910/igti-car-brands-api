@@ -1,27 +1,38 @@
-export const getBrandWithMostModels = (brands) => {
+export const getTopBrands = (brands, by = 'mostModels') => {
   let count = 0;
-  let brandWithMostModels = [];
-  let quantity = {};
+  const quantity = {};
+  const isByMostModels = by === 'mostModels';
+  const isByLeastModels = by === 'leastModels';
 
-  const getReturnValue =
-    () => {
-      return quantity[count].length > 1
-        ? quantity[count]
-        : quantity[count][0];
-    }; 
+  const predicate = (modelsLength) => {
+    if (isByMostModels)
+      return modelsLength >= count;
 
-  brands.forEach((brandObj) => {
-    const brandCount = brandObj.models.length;
-    if (brandCount >= count) {
-      count = brandCount;
-      brandWithMostModels = [...brandWithMostModels, brandObj.brand];
-      if (quantity[brandCount]) {
-        quantity[brandCount] = [...quantity[brandCount], brandObj.brand]
+    if (isByLeastModels)
+      return modelsLength <= count;
+
+    return false;
+  };
+
+  for (let i = 0; i < brands.length; i++) {
+    const brandObj = brands[i]
+    const modelsLength = brandObj.models.length;
+    const isFirstIteration = i === 0;
+
+    if (isByLeastModels && isFirstIteration) {
+      count = modelsLength;
+      continue;
+    }
+
+    if (predicate(modelsLength)) {
+      count = modelsLength;
+      if (quantity[modelsLength]) {
+        quantity[modelsLength] = [...quantity[modelsLength], brandObj.brand];
       } else {
-        quantity[brandCount] = [brandObj.brand];
+        quantity[modelsLength] = [brandObj.brand];
       }
-    };
-  });
-
-  return getReturnValue();
-}
+    }
+  }
+  
+  return quantity[count].length > 1 ? quantity[count] : quantity[count][0];
+};
