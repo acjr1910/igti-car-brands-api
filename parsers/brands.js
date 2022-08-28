@@ -43,9 +43,17 @@ const brands = (data) => {
     return formatted;
   }
 
+  const getModelsByBrandName = (name) => {
+    if (name.length === 0) return [];
+    const regex = new RegExp(name, 'i');
+    const result = data.find(o => regex.test(o.brand));
+    return result && result.models;
+  }
+
   return {
     getBrandsWith,
     getNBrandsWith,
+    getModelsByBrandName
   };
 };
 

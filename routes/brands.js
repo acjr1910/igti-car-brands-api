@@ -52,7 +52,15 @@ router.get("/listaMenosModelos/:qty", (req, res) => {
 });
 
 router.post("/listaModelos", (req, res) => {
-  res.send("POST /listaModelos");
+  fs.readFile("./db/car-list.json", CONSTANTS.ENCODINGS.UTF_8, (err, data) => {
+    if (err) {
+      res.send({ error: `Something went wrong` });
+    }
+    const { nomeMarca: brandName = "" } = req.body;
+    res
+      .status(200)
+      .send(brandsParser(JSON.parse(data)).getModelsByBrandName(brandName));
+  });
 });
 
 export default router;
