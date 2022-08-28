@@ -1,6 +1,11 @@
 const brands = (data) => {
   const sort = () => {
-    return data.sort((a, b) => b.models.length - a.models.length);
+    return data.sort((a, b) => {
+      if (b.models.length > a.models.length) return 1;
+      if (b.models.length < a.models.length) return -1;
+      if (b.brand > a.brand) return 1;
+      if (b.brand < a.brand) return -1;
+    });
   };
 
   const getBrandsWith = (option = "mostModels") => {
