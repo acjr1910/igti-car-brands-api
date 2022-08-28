@@ -1,21 +1,24 @@
-export const getTopBrands = (brands, by = 'mostModels') => {
+import CONSTANTS from "../constants/index.js";
+
+export const getTopBrands = (
+  brands,
+  by = CONSTANTS.TOP_BRANDS_BY_METHODS.MOST
+) => {
   let count = 0;
   const quantity = {};
-  const isByMostModels = by === 'mostModels';
-  const isByLeastModels = by === 'leastModels';
+  const isByMostModels = by === CONSTANTS.TOP_BRANDS_BY_METHODS.MOST;
+  const isByLeastModels = by === CONSTANTS.TOP_BRANDS_BY_METHODS.LEAST;
 
   const predicate = (modelsLength) => {
-    if (isByMostModels)
-      return modelsLength >= count;
+    if (isByMostModels) return modelsLength >= count;
 
-    if (isByLeastModels)
-      return modelsLength <= count;
+    if (isByLeastModels) return modelsLength <= count;
 
     return false;
   };
 
   for (let i = 0; i < brands.length; i++) {
-    const brandObj = brands[i]
+    const brandObj = brands[i];
     const modelsLength = brandObj.models.length;
     const isFirstIteration = i === 0;
 
@@ -33,6 +36,6 @@ export const getTopBrands = (brands, by = 'mostModels') => {
       }
     }
   }
-  
+
   return quantity[count].length > 1 ? quantity[count] : quantity[count][0];
 };
