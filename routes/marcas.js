@@ -1,6 +1,6 @@
 import express from "express";
 import fs from "fs";
-import { getTopBrands } from "./helpers.js";
+import { getTopBrands } from "../helpers/helpers.js";
 import CONSTANTS from "../constants/index.js";
 
 const router = express.Router();
